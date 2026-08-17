@@ -1,0 +1,10 @@
+# 本地数据（勿提交）
+note-data.json
+note-data.json.bak
+note.pos
+*.log
+
+# 系统
+Thumbs.db
+Desktop.ini
+.DS_Store
