@@ -7,6 +7,9 @@ note.pos
 # 本地配置（含机器特定路径，勿提交）
 dsh-studio.config.json
 
+# 依赖（勿提交）
+node_modules/
+
 # 系统
 Thumbs.db
 Desktop.ini

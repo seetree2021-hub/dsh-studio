@@ -1,0 +1,14 @@
+# dsh-studio: 自动工作室面板（任务便签/运营/商业模式）嵌入 DSH Web UI
+# host 服务挂载于此；浏览器端通过 package.json 的 dsh.client 声明被发现（无需独立 Loader 行）
+- insert:
+    - id: dsh-studio
+      name: 'dsh-studio'
+      config:
+        dataPath: ''
+        panels:
+          - text: '运营面板'
+            target: '02-运营面板.md'
+            color: '#6B8EB2'
+          - text: '商业模式'
+            target: '01-商业模式建立.md'
+            color: '#6B966E'
