@@ -19,6 +19,21 @@
 
 ---
 
+## 🚀 新用户旅程（30 秒上手）
+
+```
+下载 → 新建项目 → 说「模式建立」→ AI 对话建商业模式 → 便签+面板运营
+```
+
+1. **下载**：`git clone https://github.com/seetree2021-hub/dsh-studio`
+2. **新建项目**：`.\docs\project-template\new-project.ps1 我的工作室`
+3. **模式建立**：在 DSH（AI 运营总监）里说 **「模式建立」**——AI 分 4 组提问（现状/收入/成本/目标），答完自动生成商业模式画布 + 插件推荐 + 便签任务
+4. **运营**：桌面便签看每日任务（四象限），点📄开文档照做，打勾即存；AI 每天更新
+
+> 详细流程见 `docs/onboarding.md`｜问卷 `docs/questionnaire.md`｜插件映射 `docs/plugin-map.md`｜AI 执行手册 `docs/ai-sop.md`
+
+---
+
 ## 快速开始（3 步）
 
 1. 把 `src\desktop-note.ps1` 复制到你的工作目录（或保持原路径）
