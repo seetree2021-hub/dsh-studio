@@ -1,19 +1,19 @@
 {
   "title": "今日便签 · 示例",
   "date": "2026-08-17 周一",
-  "aiNote": "示例数据：四个象限各举一例，任务可带文档链接。",
+  "aiNote": "示例数据：四个象限各举一例，任务可带文档链接，主题色可配置。",
   "groups": [
     { "name": "■ 紧急重要 · 马上做", "color": "#C0392B", "items": [
-        { "text": "素烧（做好的坯）", "done": false, "slot": "上午", "topic": "陶瓷" }
+        { "text": "赶制本周订单", "done": false, "slot": "上午", "topic": "产品" }
     ]},
     { "name": "■ 重要不紧急 · 规划做", "color": "#E67E22", "items": [
-        { "text": "建阳坯清点 → 兔毫电窑试烧", "done": false, "slot": "上午", "topic": "陶瓷", "link": "C:\\docs\\plan.md" }
+        { "text": "更新项目计划", "done": false, "slot": "上午", "topic": "项目", "link": "C:\\docs\\plan.md" }
     ]},
     { "name": "■ 紧急不重要 · 少做", "color": "#2F6FA3", "items": [
-        { "text": "顺手拍素材", "done": false, "slot": "下午", "topic": "自媒体" }
+        { "text": "顺手拍素材", "done": false, "slot": "下午", "topic": "内容" }
     ]},
     { "name": "■ 不紧急不重要 · 可缓", "color": "#9AA0A6", "items": [
-        { "text": "过目资料清单", "done": false, "slot": "随时", "topic": "自媒体" }
+        { "text": "整理客户回访", "done": false, "slot": "随时", "topic": "客户" }
     ]}
   ],
   "inbox": []

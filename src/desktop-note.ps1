@@ -21,11 +21,24 @@ public class DW {
 '@
     [System.Windows.Forms.Application]::EnableVisualStyles()
 
-    # 数据文件（开源版可按需改路径）
-    $jsonPath = 'F:\战略规划室\AI商业模式规划\今日便签数据.json'
-    $posFile  = 'F:\战略规划室\AI商业模式规划\今日便签.pos'
-    $opsPanel = 'F:\战略规划室\AI商业模式规划\工作室工作台.html'
-    $bizPanel = 'F:\战略规划室\AI商业模式规划\01-方案-个人工作室版.html'
+    # ---------- 配置加载（dsh-studio.config.json：路径/面板/主题色均可自定义） ----------
+    $cfg = @{}
+    $configPath = Join-Path $PSScriptRoot 'dsh-studio.config.json'
+    if (Test-Path $configPath) {
+        try { $cfg = Get-Content $configPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch {}
+    }
+    $workDir = if ($cfg.workDir) { $cfg.workDir } else { (Get-Location).Path }
+    $jsonPath = if ($cfg.jsonPath) { $cfg.jsonPath } else { Join-Path $workDir 'note-data.json' }
+    $posFile  = if ($cfg.posFile)  { $cfg.posFile  } else { Join-Path $workDir 'note-data.pos' }
+    # 面板列表（可配置任意多个：text / target / color）
+    $script:panels = @()
+    if ($cfg.panels) { $script:panels = @($cfg.panels) }
+    else {
+        $script:panels = @(
+            [pscustomobject]@{ text = '运营面板'; target = (Join-Path $workDir '02-运营面板.md'); color = '#6B8EB2' },
+            [pscustomobject]@{ text = '商业模式'; target = (Join-Path $workDir '01-商业模式建立.md'); color = '#6B966E' }
+        )
+    }
 
     $script:lastWrite = [datetime]::MinValue
     $script:tbx = $null
@@ -52,7 +65,12 @@ public class DW {
     $RED   = [System.Drawing.Color]::FromArgb(196, 78, 62)
     $BLUE  = [System.Drawing.Color]::FromArgb(60, 110, 160)
     $GREEN = [System.Drawing.Color]::FromArgb(100, 140, 100)
-    $TOPIC_COLORS = @{ '陶瓷' = [System.Drawing.Color]::FromArgb(176, 65, 62); '养猪' = [System.Drawing.Color]::FromArgb(47, 111, 163); '灭火器' = [System.Drawing.Color]::FromArgb(138, 109, 59); '自媒体' = [System.Drawing.Color]::FromArgb(90, 138, 74) }
+    $TOPIC_COLORS = @{ '内容' = [System.Drawing.Color]::FromArgb(176, 65, 62); '产品' = [System.Drawing.Color]::FromArgb(47, 111, 163); '项目' = [System.Drawing.Color]::FromArgb(138, 109, 59); '客户' = [System.Drawing.Color]::FromArgb(90, 138, 74) }
+    if ($cfg.topics) {
+        foreach ($tp in $cfg.topics.PSObject.Properties) {
+            try { $TOPIC_COLORS[$tp.Name] = [System.Drawing.ColorTranslator]::FromHtml($tp.Value) } catch {}
+        }
+    }
 
     # ---------- 位置记忆 ----------
     function Load-Pos {
@@ -498,8 +516,13 @@ public class DW {
         $form.Controls.Add($pcnt)
 
         $btnY = $botY + 14
-        Add-PanelButton 20 $btnY '运营面板' $opsPanel ([System.Drawing.Color]::FromArgb(107, 142, 178))
-        Add-PanelButton 162 $btnY '商业模式' $bizPanel ([System.Drawing.Color]::FromArgb(107, 150, 110))
+        $btnX = 20
+        foreach ($pnl in $script:panels) {
+            $col = [System.Drawing.ColorTranslator]::FromHtml($pnl.color)
+            Add-PanelButton $btnX $btnY $pnl.text $pnl.target $col
+            $script:tip.SetToolTip(($form.Controls | Where-Object { $_.Text -eq $pnl.text } | Select-Object -First 1), ('打开：' + $pnl.target))
+            $btnX += 152
+        }
 
         $note = New-Object System.Windows.Forms.Label
         $note.Name = 'lblNote'

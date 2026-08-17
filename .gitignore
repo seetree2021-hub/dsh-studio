@@ -4,6 +4,9 @@ note-data.json.bak
 note.pos
 *.log
 
+# 本地配置（含机器特定路径，勿提交）
+dsh-studio.config.json
+
 # 系统
 Thumbs.db
 Desktop.ini
