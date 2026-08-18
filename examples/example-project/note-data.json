@@ -7,7 +7,7 @@
         { "text": "赶本周市集的 10 件器物", "done": false, "slot": "上午", "topic": "产品" }
     ]},
     { "name": "■ 重要不紧急 · 规划做", "color": "#E67E22", "items": [
-        { "text": "拍制作过程视频（内容素材）", "done": false, "slot": "下午", "topic": "内容", "link": "01-商业模式建立.md" }
+        { "text": "拍制作过程视频（内容素材）", "done": false, "slot": "下午", "topic": "内容", "link": "01-business-model.md" }
     ]},
     { "name": "■ 紧急不重要 · 少做", "color": "#2F6FA3", "items": [
         { "text": "回定制客户消息", "done": false, "slot": "随时", "topic": "客户" }

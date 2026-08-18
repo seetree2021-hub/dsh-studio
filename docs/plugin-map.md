@@ -36,7 +36,7 @@
 
 ## 约定
 
-- 模块文档统一放项目目录，命名 `NN-模块名.md`（01 商业模式、02 运营面板、03+ 业务模块）
+- 模块文档统一放项目目录，命名 `NN-module.md`（01 business-model、02 operations-panel、03+ module）
 - 便签数据 `note-data.json` 中的 link 字段指向对应模块文档（点📄即开）
 
 ## 安装方式：自装 or AI 推送

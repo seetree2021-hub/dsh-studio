@@ -1,12 +1,12 @@
 {
   "_说明": "DSH Studio 本地配置示例。复制为 dsh-studio.config.json 并修改（该文件已被 .gitignore 排除，不会提交）。不配置则使用默认值（当前目录 note-data.json + 两个默认面板）。",
-  "workDir": "C:\\你的工作目录",
-  "jsonPath": "C:\\你的工作目录\\note-data.json",
-  "posFile": "C:\\你的工作目录\\note-data.pos",
+  "workDir": "C:\\your-workspace",
+  "jsonPath": "C:\\your-workspace\\note-data.json",
+  "posFile": "C:\\your-workspace\\note-data.pos",
   "panels": [
-    { "text": "运营面板", "target": "C:\\你的工作目录\\02-运营面板.md", "color": "#6B8EB2" },
-    { "text": "商业模式", "target": "C:\\你的工作目录\\01-商业模式建立.md", "color": "#6B966E" },
-    { "text": "产品线", "target": "C:\\你的工作目录\\03-产品线.md", "color": "#B08B4A" }
+    { "text": "运营面板", "target": "C:\\your-workspace\\02-operations-panel.md", "color": "#6B8EB2" },
+    { "text": "商业模式", "target": "C:\\your-workspace\\01-business-model.md", "color": "#6B966E" },
+    { "text": "产品线", "target": "C:\\your-workspace\\03-product-line.md", "color": "#B08B4A" }
   ],
   "topics": {
     "内容": "#B0413E",

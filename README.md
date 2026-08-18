@@ -29,7 +29,7 @@
 ```
 
 1. **下载**：`git clone https://github.com/seetree2021-hub/dsh-studio`
-2. **新建项目**：`.\docs\project-template\new-project.ps1 我的工作室`
+2. **新建项目**：`.\docs\project-template\new-project.ps1 my-studio`
 3. **模式建立**：在 DSH（AI 运营总监）里说 **「模式建立」**——AI 分 4 组提问（现状/收入/成本/目标），答完自动生成商业模式画布 + 插件推荐 + 便签任务
 4. **运营**：桌面便签看每日任务（四象限），点📄开文档照做，打勾即存；AI 每天更新
 

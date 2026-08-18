@@ -35,10 +35,17 @@ public class DW {
     if ($cfg.panels) { $script:panels = @($cfg.panels) }
     else {
         $script:panels = @(
-            [pscustomobject]@{ text = '运营面板'; target = (Join-Path $workDir '02-运营面板.md'); color = '#6B8EB2' },
-            [pscustomobject]@{ text = '商业模式'; target = (Join-Path $workDir '01-商业模式建立.md'); color = '#6B966E' }
+            [pscustomobject]@{ text = '运营面板'; target = (Join-Path $workDir '02-operations-panel.md'); color = '#6B8EB2' },
+            [pscustomobject]@{ text = '商业模式'; target = (Join-Path $workDir '01-business-model.md'); color = '#6B966E' }
         )
     }
+
+    # ---------- 开机自启设置 ----------
+    $script:autoStart = $false
+    if ($cfg.autoStart -ne $null) { $script:autoStart = [bool]$cfg.autoStart }
+    $script:startupDir = [Environment]::GetFolderPath('Startup')
+    $script:shortcutName = 'DSH Studio 任务便签.lnk'
+    $script:shortcutPath = Join-Path $script:startupDir $script:shortcutName
 
     $script:lastWrite = [datetime]::MinValue
     $script:tbx = $null
@@ -334,7 +341,22 @@ public class DW {
         $form.Controls.Add($ttl)
         Add-Drag $ttl
 
-        # ---------- 右上：置顶 + 关闭 ----------
+        # ---------- 右上：设置 + 置顶 + 关闭 ----------
+        $btnSet = New-Object System.Windows.Forms.Label
+        $btnSet.Name = 'btnSet'
+        $btnSet.Text = '设置'
+        $btnSet.Location = New-Object System.Drawing.Point(($W - 134), 13)
+        $btnSet.Size = New-Object System.Drawing.Size(44, 24)
+        $btnSet.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+        $btnSet.Font = New-Object System.Drawing.Font($F, 9)
+        $btnSet.ForeColor = $MUT
+        $btnSet.BackColor = $FILL
+        $btnSet.Cursor = [System.Windows.Forms.Cursors]::Hand
+        $btnSet.Add_MouseEnter({ $this.BackColor = [System.Drawing.Color]::FromArgb(238, 234, 222) })
+        $btnSet.Add_MouseLeave({ $this.BackColor = $FILL })
+        $btnSet.Add_Click({ Show-Settings })
+        $form.Controls.Add($btnSet)
+
         $btnPin = New-Object System.Windows.Forms.Label
         $btnPin.Name = 'btnPin'
         $btnPin.Text = '置顶'
@@ -606,6 +628,95 @@ public class DW {
         $path.Dispose()
     }
 
+    # ---------- 开机自启：快捷方式管理 + 设置界面 ----------
+    function Update-AutoStartShortcut($enabled) {
+        if ($enabled) {
+            $ws = New-Object -ComObject WScript.Shell
+            $lnk = $ws.CreateShortcut($script:shortcutPath)
+            $lnk.TargetPath = 'powershell.exe'
+            $lnk.Arguments = "-NoProfile -STA -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$PSCommandPath`""
+            $lnk.WorkingDirectory = $PSScriptRoot
+            $lnk.Description = 'DSH Studio 任务便签（开机自启）'
+            $lnk.Save()
+        }
+        else {
+            if (Test-Path $script:shortcutPath) { Remove-Item $script:shortcutPath -Force }
+        }
+    }
+
+    function Save-AutoStart($enabled) {
+        $script:autoStart = [bool]$enabled
+        $cfgObj = $null
+        if (Test-Path $configPath) {
+            try { $cfgObj = Get-Content $configPath -Raw -Encoding UTF8 | ConvertFrom-Json } catch {}
+        }
+        if (-not $cfgObj) { $cfgObj = [pscustomobject]@{} }
+        $cfgObj | Add-Member -MemberType NoteProperty -Name 'autoStart' -Value ([bool]$enabled) -Force
+        $cfgObj | ConvertTo-Json -Depth 6 | Set-Content $configPath -Encoding UTF8
+        Update-AutoStartShortcut $enabled
+    }
+
+    function Show-Settings {
+        $dlg = New-Object System.Windows.Forms.Form
+        $dlg.Text = '便签设置'
+        $dlg.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+        $dlg.StartPosition = [System.Windows.Forms.FormStartPosition]::CenterParent
+        $dlg.BackColor = $FILL
+        $dlg.Width = 360
+        $dlg.Height = 190
+        $dlg.MaximizeBox = $false
+        $dlg.MinimizeBox = $false
+        $dlg.ShowInTaskbar = $false
+
+        $ttl = New-Object System.Windows.Forms.Label
+        $ttl.Text = 'DSH Studio · 任务便签'
+        $ttl.Location = New-Object System.Drawing.Point(20, 14)
+        $ttl.AutoSize = $true
+        $ttl.Font = New-Object System.Drawing.Font($F, 11, [System.Drawing.FontStyle]::Bold)
+        $ttl.ForeColor = $INK
+        $dlg.Controls.Add($ttl)
+
+        $chk = New-Object System.Windows.Forms.CheckBox
+        $chk.Text = '开机自启（登录 Windows 后自动弹出便签）'
+        $chk.Location = New-Object System.Drawing.Point(20, 50)
+        $chk.Size = New-Object System.Drawing.Size(310, 30)
+        $chk.Font = New-Object System.Drawing.Font($F, 10)
+        $chk.Checked = $script:autoStart
+        $dlg.Controls.Add($chk)
+
+        $hint = New-Object System.Windows.Forms.Label
+        $hint.Text = '关闭后需手动启动：可随时在便签右上角「设置」里重新开启。'
+        $hint.Location = New-Object System.Drawing.Point(22, 82)
+        $hint.Size = New-Object System.Drawing.Size(310, 32)
+        $hint.Font = New-Object System.Drawing.Font($F, 8)
+        $hint.ForeColor = $MUT
+        $dlg.Controls.Add($hint)
+
+        $btnOk = New-Object System.Windows.Forms.Button
+        $btnOk.Text = '保存'
+        $btnOk.Location = New-Object System.Drawing.Point(150, 118)
+        $btnOk.Size = New-Object System.Drawing.Size(88, 30)
+        $btnOk.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+        $btnOk.DialogResult = [System.Windows.Forms.DialogResult]::OK
+        $dlg.AcceptButton = $btnOk
+        $dlg.Controls.Add($btnOk)
+
+        $btnCancel = New-Object System.Windows.Forms.Button
+        $btnCancel.Text = '取消'
+        $btnCancel.Location = New-Object System.Drawing.Point(248, 118)
+        $btnCancel.Size = New-Object System.Drawing.Size(88, 30)
+        $btnCancel.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+        $btnCancel.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+        $dlg.CancelButton = $btnCancel
+        $dlg.Controls.Add($btnCancel)
+
+        $r = $dlg.ShowDialog($form)
+        if ($r -eq [System.Windows.Forms.DialogResult]::OK -and $chk.Checked -ne $script:autoStart) {
+            Save-AutoStart $chk.Checked
+        }
+        $dlg.Dispose()
+    }
+
     $form.Add_MouseDown({
         if ($_.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
             [DW]::ReleaseCapture() | Out-Null
@@ -640,6 +751,7 @@ public class DW {
     })
 
     Load-Pos
+    if ($script:autoStart) { Update-AutoStartShortcut $true }
     Build-UI
     Set-Rounded $form
     $script:lastWrite = (Get-Item $jsonPath).LastWriteTimeUtc
@@ -651,3 +763,4 @@ public class DW {
 catch {
     "ERROR $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss'): $($_.Exception.Message)`n$($_ | Out-String)" | Out-File $log -Append -Encoding UTF8
 }
+

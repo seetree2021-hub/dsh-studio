@@ -7,8 +7,8 @@
         dataPath: ''
         panels:
           - text: '运营面板'
-            target: '02-运营面板.md'
+            target: '02-operations-panel.md'
             color: '#6B8EB2'
           - text: '商业模式'
-            target: '01-商业模式建立.md'
+            target: '01-business-model.md'
             color: '#6B966E'

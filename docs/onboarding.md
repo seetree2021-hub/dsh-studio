@@ -21,18 +21,18 @@ git clone https://github.com/seetree2021-hub/dsh-studio.git
 ## 第 1 步 · 新建项目（30 秒）
 
 ```powershell
-cd 你的工作目录
-.\dsh-studio\docs\project-template\new-project.ps1 我的工作室
+cd C:\your-workspace
+.\dsh-studio\docs\project-template\new-project.ps1 my-studio
 ```
 
 脚本自动生成项目骨架（一个文件夹，全模板）：
 
 ```
-我的工作室/
-├── note-data.json          # 便签数据（已初始化 2 条引导任务）
-├── 01-商业模式建立.md       # 商业模式画布（待对话填写）
-├── 02-运营面板.md           # 运营工位看板（模板）
-└── README.md               # 项目说明（含下一步指引）
+my-studio/
+├── note-data.json           # 便签数据（已初始化 2 条引导任务）
+├── 01-business-model.md     # 商业模式画布（待对话填写）
+├── 02-operations-panel.md   # 运营工位看板（模板）
+└── README.md                # 项目说明（含下一步指引）
 ```
 
 ## 第 2 步 · 模式建立（10-15 分钟，纯聊天）
@@ -45,7 +45,7 @@ AI 按《questionnaire.md》问卷分 4 组逐步提问（每次 1-2 个问题�
 你的现状 → 收入与产品 → 成本与资源 → 目标与约束。
 
 全部回答后，AI 自动产出（写入项目文档）：
-- **《01-商业模式建立.md》**：商业模式画布九要素 + 运营策略 + 定价/现金流要点
+- **《01-business-model.md》**：商业模式画布九要素 + 运营策略 + 定价/现金流要点
 - **插件推荐清单**（按业务线映射，见《plugin-map.md》）
 - **便签初始任务**（note-data.json 更新为真实任务）
 

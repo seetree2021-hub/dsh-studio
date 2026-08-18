@@ -52,7 +52,7 @@ DSH Studio 不是一个需要安装的软件，而是三件套协同的"自动�
 ```
 
 仓库地址：`https://github.com/seetree2021-hub/dsh-studio`
-本地开发目录：`F:\战略规划室\数字工作台\opensource\dsh-studio`
+本地开发目录：`F:\zhanlue\AI studio\DSH Studio\opensource\dsh-studio`
 
 ## 四、什么时候才"安装插件"？
 
@@ -67,7 +67,7 @@ dsh plugin --profile web add dsh-studio
 
 ## 五、迭代登记（本机）
 
-每次功能迭代在 `F:\战略规划室\AI商业模式规划\STATUS.md` 的需求变更记录中登记版本与变更，保证新对话/新会话能接续。
+每次功能迭代在 `F:\zhanlue\AI studio\STATUS.md` 的需求变更记录中登记版本与变更，保证新对话/新会话能接续。
 
 ## Roadmap（当前）
 

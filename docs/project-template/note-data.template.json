@@ -1,0 +1,17 @@
+﻿{
+  "title": "<PROJECT_NAME> · 今日便签",
+  "date": "启动日",
+  "aiNote": "欢迎！说「模式建立」让 AI 帮你建立商业模式，或直接在上方添加临时任务。",
+  "groups": [
+    { "name": "■ 紧急重要 · 马上做", "color": "#C0392B", "items": [
+        { "text": "完成『模式建立』对话（在 DSH 里说：模式建立）", "done": false, "slot": "上午", "topic": "通用" }
+    ]},
+    { "name": "■ 重要不紧急 · 规划做", "color": "#E67E22", "items": [
+        { "text": "过目《01-business-model.md》", "done": false, "slot": "随时", "topic": "通用", "link": "01-business-model.md" }
+    ]},
+    { "name": "■ 紧急不重要 · 少做", "color": "#2F6FA3", "items": []},
+    { "name": "■ 不紧急不重要 · 可缓", "color": "#9AA0A6", "items": []}
+  ],
+  "inbox": []
+}
+
